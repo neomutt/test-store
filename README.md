@@ -27,4 +27,28 @@ key: /home/flatcap/mail/1679932108.M761797P185751.flatcap.org,S=5055,W=5153
 	data length: 1008
 ...
 54569 records
+```
+
+## lmdb-cull.c
+
+Cull a percentage of the contents of an LMDB store.
+
+**build**:
+```sh
+gcc lmdb-cull.c -o lmdb-cull -llmdb
+```
+
+**run**:
+```sh
+# Delete a random 30% of the records
+./lmdb-cull store-file 30
+```
+
+**output**:
+```
+Opening store-file
+Culling 30%
+54569 records
+16321 culled
+```
 
