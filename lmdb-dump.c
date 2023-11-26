@@ -50,6 +50,13 @@ int main(int argc, char *argv[])
     int len = key.mv_size;
     printf("key: %.*s\n", len, (const char *) key.mv_data);
     printf("\tdata length: %zu\n", data.mv_size);
+    printf("\tdata: ");
+    unsigned char *bytes = data.mv_data;
+    for (size_t i = 0; (i < 32) && (i < data.mv_size); i++)
+    {
+      printf("%02x ", bytes[i]);
+    }
+    printf("\n");
   }
 
   mdb_cursor_close(cursor);
