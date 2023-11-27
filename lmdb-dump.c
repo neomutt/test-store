@@ -1,7 +1,9 @@
 // gcc lmdb-dump.c -o lmdb-dump -llmdb
 #include <errno.h>
 #include <lmdb.h>
+#include <stdint.h>
 #include <stdio.h>
+#include <time.h>
 
 int main(int argc, char *argv[])
 {
@@ -57,6 +59,13 @@ int main(int argc, char *argv[])
       printf("%02x ", bytes[i]);
     }
     printf("\n");
+
+    time_t t = *(uint32_t *) data.mv_data;
+    struct tm tm = { 0 };
+    localtime_r(&t, &tm);
+    char buf[32] = { 0 };
+    strftime(buf, sizeof(buf), "%F %T", &tm);
+    printf("\tTime: %s\n", buf);
   }
 
   mdb_cursor_close(cursor);
