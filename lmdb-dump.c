@@ -65,7 +65,16 @@ int main(int argc, char *argv[])
     localtime_r(&t, &tm);
     char buf[32] = { 0 };
     strftime(buf, sizeof(buf), "%F %T", &tm);
-    printf("\tTime: %s\n", buf);
+    printf("\tTime: %s  ", buf);
+
+    uint32_t crc = *(uint32_t *) (bytes + 4);
+    printf("CRC: 0x%08x  ", crc);
+
+    uint32_t next = *(uint32_t *) (bytes + 8);
+    if (next == 0xfd2fb528)
+      printf("Compressed: zstd  ");
+
+    printf("\n");
   }
 
   mdb_cursor_close(cursor);
